@@ -7,20 +7,26 @@ import is.hi.hbv601g.workoutmaker.WorkoutMaker.Entities.WorkoutLineItem;
 import is.hi.hbv601g.workoutmaker.WorkoutMaker.Services.ExerciseService;
 import is.hi.hbv601g.workoutmaker.WorkoutMaker.Services.UserService;
 import is.hi.hbv601g.workoutmaker.WorkoutMaker.Services.WorkoutService;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class WorkoutController {
     private ExerciseService exerciseService;
     private WorkoutService workoutService;
@@ -57,6 +63,7 @@ public class WorkoutController {
 
             return "add-workout";
         }
+
         String sessionUsername = ((User) session.getAttribute("LoggedInUser")).getUsername();
         User sessionUser = userService.findByUsername(sessionUsername);
         //ef user loggaður inn þá save-a workoutið
@@ -148,25 +155,45 @@ public class WorkoutController {
 
     }
 
-    @RequestMapping(value = "/view-workout/{workoutId}", method = RequestMethod.GET)
-    public String viewWorkoutGET(@PathVariable("workoutId") int wId, Model model) {
-        Workout workout = workoutService.findWorkoutById(wId).get();
-        model.addAttribute("workout", workout);
-        return "view-workout";
+    /*
+    * Returns: Workout úr gagnagrunni
+     */
+    @RequestMapping(value = "/workouts/{workoutId}", method = RequestMethod.GET)
+    public Workout viewWorkoutGET(@PathVariable("workoutId") int wId) {
+        if (workoutService.findWorkoutById(wId).isPresent()) {
+            return workoutService.findWorkoutById(wId).get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid workout ID");
+        }
     }
 
-    @RequestMapping(value = "/view-workout/delete-exercise/{id}", method = RequestMethod.POST)
-    public String workoutLineItemDelete(@PathVariable long id , HttpSession session, Model model) {
-        //nær í id á exercise sem á að deletea og síðan finnur hann workoutið sem wli á og fer á sá síðu aftur
-        long workoutId = workoutService.findWLIById(id).get().getWorkout().getId();
-        workoutService.deleteWLI(workoutService.findWLIById(id).get());
-        return "redirect:/view-workout/" + workoutId;
+    /*
+    * Eyða workoutLineItem úr gagnagrunni
+     */
+    @RequestMapping(value = "/workouts/exercise/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> workoutLineItemDelete(@PathVariable long id , HttpSession session) {
+        if (workoutService.findWLIById(id).isPresent()) {
+            //workoutId notað til að vísa á rétt view: return "redirect:/view-workout/" + workoutId;
+            //long workoutId = workoutService.findWLIById(id).get().getWorkout().getId();
+            workoutService.deleteWLI(workoutService.findWLIById(id).get());
+            return ResponseEntity.noContent().build();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid workoutLineItem ID");
+        }
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String workoutDelete(@PathVariable long id, HttpSession session, Model model) {
-        workoutService.deleteWorkout(workoutService.findWorkoutById(id).get());
-        return "redirect:/profile";
+    /*
+    * Eyða workout úr gagnagrunni
+     */
+    @RequestMapping(value = "/workouts/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> workoutDelete(@PathVariable long id, HttpSession session) {
+        if (workoutService.findWorkoutById(id).isPresent()) {
+            Workout workout = workoutService.findWorkoutById(id).get();
+            workoutService.deleteWorkout(workout);
+            return ResponseEntity.noContent().build();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid workout ID");
+        }
     }
 
 }

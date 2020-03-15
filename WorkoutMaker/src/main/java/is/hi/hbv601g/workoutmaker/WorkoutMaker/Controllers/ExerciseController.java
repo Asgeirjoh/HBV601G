@@ -8,10 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ExerciseController {
     private ExerciseService exerciseService;
 
@@ -20,22 +21,22 @@ public class ExerciseController {
         this.exerciseService = exerciseService;
     }
 
-    @RequestMapping(value="/search")
-    public String search() {
-        return "search";
-    }
-
+    /*
+    * REST: Skilar niðurstöðu leitarinnar
+    * Param: String search
+    * Returns: List<Exercise>
+     */
     @RequestMapping(value="/exerciseSearch", method= RequestMethod.POST)
-    public String searchExercise(@RequestParam(value="search", required = false) String search, Model model) {
-        System.out.println("The search object"+search);
-        List<Exercise> exercise = exerciseService.findByName(search);
-        model.addAttribute("exercise", exercise);
-        return "search"; //á að skila síðunni sem sýnir niðurstöðu leitarinnar
+    public List<Exercise> searchExercise(@RequestParam(value="search", required = false) String search) {
+        return exerciseService.findByName(search);
     }
 
+    /*
+    * Skilar lista af öllum æfingum
+    * Return: List<Exercise>
+     */
     @RequestMapping(value = "/exercises", method = RequestMethod.GET)
-    public String exerciseGET(Model model){
-        model.addAttribute("exercises", exerciseService.findAll());
-        return "exercises";
+    public List<Exercise> exerciseGET(){
+        return exerciseService.findAll();
     }
 }
