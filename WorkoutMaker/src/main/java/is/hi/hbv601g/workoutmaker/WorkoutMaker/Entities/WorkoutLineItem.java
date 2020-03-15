@@ -1,5 +1,7 @@
 package is.hi.hbv601g.workoutmaker.WorkoutMaker.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,7 @@ public class WorkoutLineItem {
     private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties("exercises")
     private Workout workout;
 
     @ManyToOne//(cascade = CascadeType.ALL)

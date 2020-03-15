@@ -1,5 +1,8 @@
 package is.hi.hbv601g.workoutmaker.WorkoutMaker.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +14,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
+    @JsonProperty(value = "username")
     private String username;
     private String password;
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
     private List<Workout> workouts = new ArrayList<>();
 
     public List<Workout> getWorkouts() {
@@ -51,6 +57,7 @@ public class User {
         this.username = username;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY )
     public String getPassword() {
         return password;
     }

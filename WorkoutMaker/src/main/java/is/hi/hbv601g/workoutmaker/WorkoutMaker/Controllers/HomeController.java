@@ -6,8 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class HomeController {
 
     //private WorkoutService workoutService;
@@ -18,10 +19,12 @@ public class HomeController {
         this.authenticationService = authenticationService;
     }
 
+    /*
+    * REST: Skilar engu núna, notum ekki homeController
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String Home(Model model){
-        //model.addAttribute("workouts", workoutService.findAll());
-        return "Velkominn";
+    public void Home(){
+
     }
     /* á ekki við hjá okkur, homepage-ið okkar verður eiginlega bara tóm síða með link á log-in page
     @RequestMapping(value = "/addworkout", method = RequestMethod.POST)
