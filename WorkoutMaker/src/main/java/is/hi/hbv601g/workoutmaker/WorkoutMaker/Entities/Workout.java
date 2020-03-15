@@ -1,5 +1,7 @@
 package is.hi.hbv601g.workoutmaker.WorkoutMaker.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -16,9 +18,11 @@ public class Workout {
     private String workoutTypes;
 
     @ManyToOne//(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("workouts")
     private User user;
 
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("workout")
     private List<WorkoutLineItem> exercises = new ArrayList<>();
 
     public Workout() {
