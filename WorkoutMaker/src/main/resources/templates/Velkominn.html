@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+
+</head>
+<body>
+
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="shitmix">
+    <p> </p>
+</div>
+
+<main>
+    <h1>Work in progress</h1>
+    <div class="container">
+        <div class="loginVelkominn">
+            <p><a href="/login">Log in</a></p>
+        </div>
+        <div class="loginSignup">
+            <p><a href="/signup">Sign up</a></p>
+        </div>
+        <div class="loginViewexercises">
+            <p><a href="/exercises">View exercises</a></p>
+        </div>
+        <div>
+            <p><a href="/profile">View workouts</a></p>
+        </div>
+    </div>
+</main>
+
+<!-- þetta á ekki við okkar, munum ekki birta lista af exercises á homepage
+<div th:switch="${workouts}">
+    <h2 th:case="null">No workouts yet!</h2>
+    <div th:case="*">
+        <h2>workouts</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Rating</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="workout : ${workouts}">
+                <td th:text="${workout.title}"></td>
+                <td th:text="${workout.description}"></td>
+                <td th:text="${workout.rating}"></td>
+                <td><a th:href="@{/delete/{id}(id=${workout.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/add-workout">Add a new workout</a></p>
+</div>
+-->
+
+</body>
+</html>
+
+
+
+

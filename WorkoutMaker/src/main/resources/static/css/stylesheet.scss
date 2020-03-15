@@ -1,0 +1,40 @@
+
+@import "_header";
+@import "_body";
+@import "_tables";
+@import "_Velkominn";
+@import "_container";
+@import "_buttons";
+
+
+main,body{
+  text-align: center;
+}
+
+h2,h1,h3,h3{
+  border-radius: 10px 10px 0 0;
+  padding: 15px 0;
+  box-sizing: border-box;
+  background-color: #333333;
+  min-width: 610px;
+  width: calc(40% + 200px);
+  position: relative;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+}
+
+.shitmix{
+  padding: 20px;
+}
+
+td{
+  padding-right: 20px;
+  color: white;
+  a{
+    color: white
+  }
+}
+a{
+  color: white;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+</head>
+<body>
+
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="shitmix">
+    <p> </p>
+</div>
+
+<div class="containerTable">
+    <div th:switch="${users}">
+        <h2 th:case="null">No users yet!</h2>
+        <div th:case="*">
+            <h2>Users</h2>
+            <table id="tableadd">
+                <thead>
+                <tr>
+                    <th>User name</th>
+                    <th>Password</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.password}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/signup">Add a new user</a></p>
+    </div>
+</div>
+</body>
+</html>

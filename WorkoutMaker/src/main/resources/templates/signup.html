@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+</head>
+<body>
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="shitmix">
+    <p> </p>
+</div>
+
+<h2>Sign up for an account</h2>
+<div class="container">
+    <form class="signupForm" action="#" th:action="@{/signup}" th:object="${user}"  method="post">
+        <div class="rowContainer">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" th:field="*{username}"/>
+        </div>
+        <div class="rowContainer">
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" th:field="*{email}"/>
+        </div>
+        <div class="rowContainer">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" th:value="*{password}"/>
+        </div>
+            <input type="submit" value="Sign up"/>
+            <p th:text="${message}">error messages if any</p>
+
+    </form>
+        <p><a class="backBtn" href="/">Back</a></p>
+</div>
+
+</body>
+</html>
