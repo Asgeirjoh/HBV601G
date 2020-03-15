@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new workout</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+
+</head>
+<body>
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="shitmix">
+    <p> </p>
+</div>
+
+<!-- Vantar workout type o.fl. -->
+<form action="#" th:action="@{/edit-workout/{id}(id=${workout.id})}" th:object="${workout}" method="post">
+<div class="containerTable">
+    <div class="rowContainer">
+        <label for="workoutName">Name</label>
+        <input type="text" th:field="*{workoutName}" id="workoutName" placeholder="Name">
+    </div>
+    <span th:if="${#fields.hasErrors('workoutName')}" th:errors="*{workoutName}"></span>
+    <div class="rowContainer">
+        <label for="workoutType">Type</label>
+        <select id="workoutType" th:field="*{workoutTypes}">
+            <option th:value="'cardio'" th:text="Cardio"></option>
+            <option th:value="'superset'" th:text="Superset"></option>
+            <option th:value="'hiit'" th:text="HIIT"></option>
+            <option th:value="'crossfit'" th:text="Crossfit"></option>
+            <option th:value="'hypertrophy'" th:text="Hypertrophy"></option>
+        </select>
+    </div>
+    <div class="rowContainer">
+        <label for="description">Description</label>
+        <input type="text" th:field="*{description}" id="description" placeholder="Description">
+        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+    </div>
+</div>
+
+
+<div class="container">
+    <table id="tableadd">
+        <thead>
+            <h3>Workout</h3>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="col">Exercise Id</th>
+            <th scope="col">Sets</th>
+            <th scope="col">Reps</th>
+        </tr>
+        <tr th:each="exercise, stat : *{exercises}">
+            <td><input th:field="*{exercises[__${stat.index}__].exId}"></td>
+            <td><input th:field="*{exercises[__${stat.index}__].sets}"></td>
+            <td><input th:field="*{exercises[__${stat.index}__].reps}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <input type="submit" value="Edit Workout">
+</div>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+</head>
+<body>
+
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="shitmix">
+    <p> </p>
+</div>
+
+<h2>Workouts</h2>
+<div class="container">
+    <div th:switch="${workouts}">
+        <h2 th:case="null">No workouts yet!</h2>
+        <div th:case="*">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="workout : ${workouts}">
+                    <td th:text="${workout.workoutName}"></td>
+                    <td th:text="${workout.workoutTypes}"></td>
+                    <td th:text="${workout.description}"></td>
+                    <td><a th:href="@{/view-workout/{id}(id=${workout.id})}">View</a></td>
+                    <td>
+                        <form action="#" th:action="@{/delete/{id}(id=${workout.id})}" th:object="${workout}" method="post">
+                            <input class="delete" type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p><a class="addworkout" th:href="@{/add-workout}">Add a new workout</a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<!--<button action="#" th:action="@{/delete/{id}(id=${workout.id})}" th:object="${workout}" method="post">delete</button>-->

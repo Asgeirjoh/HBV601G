@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercises</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}"/>
+</head>
+<body>
+
+<div class="navbar">
+    <nav class="headernav">
+        <div class="homepage_navbar">
+            <ul class="homepagelink">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <ul class="menu">
+            <li><a href="/exercises">View exercises</a></li>
+            <li><a href="/profile">View workouts</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </nav>
+</div>
+
+
+<div th:switch="${exercises}">
+    <h2 th:case="null">No exercises found in database</h2>
+    <div th:case="*">
+        <div class="shitmix">
+            <p> </p>
+        </div>
+        <h2>Exercises</h2>
+        <div class="container">
+            <table id="exTable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Categories</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="exercise: ${exercises}">
+                    <td th:text="${exercise.name}"></td>
+                    <td th:text="${exercise.categories}"></td>
+                    <td th:text="${exercise.description}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <p><a class="backBtn" href="/">Back</a></p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

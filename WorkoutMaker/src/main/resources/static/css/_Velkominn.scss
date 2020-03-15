@@ -1,0 +1,18 @@
+@mixin loginGeneral{
+  box-sizing: border-box;
+  padding: 0 10px 30px 10px;
+  display: inline-block;
+}
+
+.container{
+  .loginVelkominn{
+    @include loginGeneral;
+  }
+  .loginSignup{
+    @include loginGeneral;
+  }
+  .loginViewexercises{
+    @include loginGeneral;
+  }
+}
+

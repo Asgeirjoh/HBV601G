@@ -1,0 +1,46 @@
+table{
+   box-sizing: border-box;
+   margin: 0 auto;
+   width: calc(20% + 200px);
+   border:0.5px;
+   color: white;
+   padding-bottom: 10px;
+   input[type=text]{
+     width: calc(20% + 100px);
+   }
+ }
+th,td{
+  text-align: center;
+  position: relative;
+}
+
+table#tableadd {
+  table-layout: fixed;
+  width: 200px;
+  th, td {
+    width: 200px;
+    overflow: hidden;
+  }
+  button[type=submit]{
+    padding: 5px;
+    background-color: #333333;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    border: none;
+  }
+  button[type=submit]:hover{
+    background-color: tomato;
+    cursor: pointer;
+  }
+}
+
+.container{
+  table#exTable{
+    width: 600px;
+    tr td:last-child{
+      width: 70%;
+      padding-top: 20px;
+    }
+  }
+}
